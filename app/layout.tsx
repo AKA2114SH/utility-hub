@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono'
 });
 
+// This dynamic prefix handles the difference between GitHub Pages (/utility-hub) and Vercel (/)
+const isGitHubPages = process.env.NODE_ENV === 'production' && process.env.GITHUB_ACTIONS === 'true';
+const assetPrefix = isGitHubPages ? '/utility-hub' : '';
+
 export const metadata: Metadata = {
   title: 'UtilityHub - All-in-One Online Tools',
   description: 'Free online tools for PDF, Image, Text, and Productivity tasks. No uploads to servers - everything runs in your browser.',
@@ -22,19 +26,19 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
+        url: `${assetPrefix}/icon-light-32x32.png`,
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/icon-dark-32x32.png',
+        url: `${assetPrefix}/icon-dark-32x32.png`,
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
+        url: `${assetPrefix}/icon.svg`,
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: `${assetPrefix}/apple-icon.png`,
   },
 }
 
