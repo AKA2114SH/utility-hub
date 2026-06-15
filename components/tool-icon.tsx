@@ -11,6 +11,14 @@ import {
   FileDown,
   Minimize2,
   Eraser,
+  ListTodo,
+  Eye,
+  Type,
+  Palette,
+  Zap,
+  Code,
+  Hash,
+  Barcode,
   type LucideIcon
 } from 'lucide-react'
 import type { IconName } from '@/lib/tools-data'
@@ -28,6 +36,14 @@ const iconMap: Record<IconName, LucideIcon> = {
   'languages': Languages,
   'subtitles': Subtitles,
   'image': Image,
+  'list-todo': ListTodo,
+  'eye': Eye,
+  'type': Type,
+  'palette': Palette,
+  'zap': Zap,
+  'code': Code,
+  'hash': Hash,
+  'barcode': Barcode,
 }
 
 interface ToolIconProps {

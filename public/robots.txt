@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow crawling of internal URLs
+Disallow: /_next/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://utilityhub.dev/sitemap.xml

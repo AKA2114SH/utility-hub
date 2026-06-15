@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Download, Loader2, Image as ImageIcon } from 'lucide-react'
 import imageCompression from 'browser-image-compression'
 import { Button } from '@/components/ui/button'
@@ -13,8 +13,17 @@ export function ImageCompressorTool() {
   const [preview, setPreview] = useState<string | null>(null)
   const [compressed, setCompressed] = useState<{ url: string; size: number } | null>(null)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [quality, setQuality] = useState([80])
   const [maxWidth, setMaxWidth] = useState([1920])
+
+  // Cleanup Object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview)
+      if (compressed) URL.revokeObjectURL(compressed.url)
+    }
+  }, [])
 
   const compressImage = useCallback(async () => {
     if (!file) return
@@ -40,9 +49,16 @@ export function ImageCompressorTool() {
   }, [file, quality, maxWidth])
 
   const handleFileSelect = useCallback((selectedFile: File) => {
+    setError(null)
     setFile(selectedFile)
     setPreview(URL.createObjectURL(selectedFile))
     setCompressed(null)
+  }, [])
+
+  const handleFileError = useCallback((error: string) => {
+    setError(error)
+    setFile(null)
+    setPreview(null)
   }, [])
 
   const downloadCompressed = useCallback(() => {
@@ -65,12 +81,19 @@ export function ImageCompressorTool() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm text-red-700 dark:text-red-300">
+          {error}
+        </div>
+      )}
       {!file ? (
         <FileDropzone
           accept="image/*"
           onFileSelect={handleFileSelect}
+          onError={handleFileError}
           label="Drop your image here or click to upload"
           hint="Supports JPG, PNG, WebP, and more"
+          maxSize={50}
         />
       ) : (
         <>

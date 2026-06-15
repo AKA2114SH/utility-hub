@@ -10,29 +10,47 @@ interface FileDropzoneProps {
   label?: string
   hint?: string
   className?: string
+  maxSize?: number // in MB
+  onError?: (error: string) => void
 }
+
+const MAX_FILE_SIZE = 50 * 1024 * 1024 // 50MB default
 
 export function FileDropzone({ 
   accept, 
   onFileSelect, 
   label = "Drop file here or click to upload",
   hint,
-  className 
+  className,
+  maxSize = 50, // 50MB default
+  onError
 }: FileDropzoneProps) {
+  const validateFile = useCallback((file: File) => {
+    const maxBytes = maxSize * 1024 * 1024
+    
+    if (file.size > maxBytes) {
+      const error = `File size exceeds ${maxSize}MB limit`
+      onError?.(error)
+      return false
+    }
+    
+    return true
+  }, [maxSize, onError])
+
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
-    if (file) {
+    if (file && validateFile(file)) {
       onFileSelect(file)
     }
-  }, [onFileSelect])
+  }, [onFileSelect, validateFile])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
+    if (file && validateFile(file)) {
       onFileSelect(file)
     }
-  }, [onFileSelect])
+  }, [onFileSelect, validateFile])
 
   return (
     <label

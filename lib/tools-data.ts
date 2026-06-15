@@ -11,6 +11,14 @@ export type IconName =
   | 'languages'
   | 'subtitles'
   | 'image'
+  | 'list-todo'
+  | 'eye'
+  | 'type'
+  | 'palette'
+  | 'zap'
+  | 'code'
+  | 'hash'
+  | 'barcode'
 
 export interface Tool {
   slug: string
@@ -122,6 +130,71 @@ export const tools: Tool[] = [
     category: 'Image Tools',
     iconName: 'image',
     color: 'bg-teal-500/10 text-teal-500 dark:bg-teal-500/20'
+  },
+  // Additional Text Tools
+  {
+    slug: 'text-case-converter',
+    name: 'Text Case Converter',
+    description: 'Convert text to uppercase, lowercase, title case, etc.',
+    category: 'Text Tools',
+    iconName: 'type',
+    color: 'bg-violet-500/10 text-violet-500 dark:bg-violet-500/20'
+  },
+  {
+    slug: 'password-generator',
+    name: 'Password Generator',
+    description: 'Generate strong, random passwords with custom rules',
+    category: 'Developer Tools',
+    iconName: 'zap',
+    color: 'bg-lime-500/10 text-lime-500 dark:bg-lime-500/20'
+  },
+  {
+    slug: 'json-formatter',
+    name: 'JSON Formatter',
+    description: 'Format, validate, and minify JSON data',
+    category: 'Developer Tools',
+    iconName: 'code',
+    color: 'bg-sky-500/10 text-sky-500 dark:bg-sky-500/20'
+  },
+  {
+    slug: 'markdown-preview',
+    name: 'Markdown Preview',
+    description: 'Write and preview Markdown with live rendering',
+    category: 'Text Tools',
+    iconName: 'eye',
+    color: 'bg-fuchsia-500/10 text-fuchsia-500 dark:bg-fuchsia-500/20'
+  },
+  {
+    slug: 'color-converter',
+    name: 'Color Converter',
+    description: 'Convert between HEX, RGB, HSL color formats',
+    category: 'Developer Tools',
+    iconName: 'palette',
+    color: 'bg-yellow-500/10 text-yellow-500 dark:bg-yellow-500/20'
+  },
+  {
+    slug: 'hash-generator',
+    name: 'Hash Generator',
+    description: 'Generate MD5, SHA1, SHA256 hashes from text',
+    category: 'Developer Tools',
+    iconName: 'hash',
+    color: 'bg-orange-500/10 text-orange-500 dark:bg-orange-500/20'
+  },
+  {
+    slug: 'qr-code-generator',
+    name: 'QR Code Generator',
+    description: 'Create QR codes from text or URLs',
+    category: 'Developer Tools',
+    iconName: 'barcode',
+    color: 'bg-red-500/10 text-red-500 dark:bg-red-500/20'
+  },
+  {
+    slug: 'todo-list',
+    name: 'To-Do List',
+    description: 'Create and manage tasks with local storage',
+    category: 'Productivity',
+    iconName: 'list-todo',
+    color: 'bg-green-500/10 text-green-500 dark:bg-green-500/20'
   }
 ]
 
