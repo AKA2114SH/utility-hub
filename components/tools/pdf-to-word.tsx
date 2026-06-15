@@ -20,6 +20,13 @@ export function PdfToWordTool() {
     setProgress(0)
 
     try {
+      // Validate file size (50MB max)
+      if (pdfFile.size > 50 * 1024 * 1024) {
+        setError('File size exceeds 50MB limit')
+        setLoading(false)
+        return
+      }
+
       const pdfjsLib = await import('pdfjs-dist')
       
       // Set worker source

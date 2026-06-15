@@ -7,6 +7,7 @@ export function PasswordGenerator() {
   const [password, setPassword] = useState('')
   const [length, setLength] = useState(16)
   const [copied, setCopied] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [options, setOptions] = useState({
     uppercase: true,
     lowercase: true,
@@ -27,10 +28,12 @@ export function PasswordGenerator() {
     if (options.symbols) chars += symbols
 
     if (!chars) {
+      setError('Please select at least one character type')
       setPassword('')
       return
     }
 
+    setError(null)
     let pass = ''
     for (let i = 0; i < length; i++) {
       pass += chars.charAt(Math.floor(Math.random() * chars.length))
@@ -46,6 +49,11 @@ export function PasswordGenerator() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg p-4 text-sm text-red-700 dark:text-red-300">
+          {error}
+        </div>
+      )}
       <div className="bg-muted p-4 rounded-lg">
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1">

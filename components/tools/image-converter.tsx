@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { Download, Loader2, Image as ImageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -21,8 +21,21 @@ export function ImageConverterTool() {
   const [targetFormat, setTargetFormat] = useState('image/webp')
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  // Cleanup Object URLs to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview)
+    }
+  }, [])
+
   const convertImage = useCallback(async () => {
     if (!file || !canvasRef.current) return
+    
+    // Validate file size (50MB max)
+    if (file.size > 50 * 1024 * 1024) {
+      console.error('File exceeds 50MB limit')
+      return
+    }
     
     setLoading(true)
     
